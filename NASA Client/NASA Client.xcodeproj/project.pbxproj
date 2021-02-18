@@ -14,6 +14,8 @@
 		D01C333325DD8E800091A70D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D01C333125DD8E800091A70D /* Main.storyboard */; };
 		D01C333525DD8E820091A70D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D01C333425DD8E820091A70D /* Assets.xcassets */; };
 		D01C333825DD8E820091A70D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D01C333625DD8E820091A70D /* LaunchScreen.storyboard */; };
+		D050CB1E25DEDA80009BA82A /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = D050CB1D25DEDA80009BA82A /* Target.swift */; };
+		D050CB2125DEE7DD009BA82A /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D050CB2025DEE7DD009BA82A /* Provider.swift */; };
 		D0F42DFD25DEB7AE0099F4C5 /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F42DFC25DEB7AE0099F4C5 /* RequestModel.swift */; };
 		D0F42E0025DEB7C40099F4C5 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F42DFF25DEB7C40099F4C5 /* RealmModel.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +32,8 @@
 		D01C333425DD8E820091A70D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D01C333725DD8E820091A70D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D01C333925DD8E820091A70D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D050CB1D25DEDA80009BA82A /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
+		D050CB2025DEE7DD009BA82A /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		D0F42DFC25DEB7AE0099F4C5 /* RequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
 		D0F42DFF25DEB7C40099F4C5 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +113,8 @@
 			children = (
 				D0F42DFC25DEB7AE0099F4C5 /* RequestModel.swift */,
 				D0F42DFF25DEB7C40099F4C5 /* RealmModel.swift */,
+				D050CB1D25DEDA80009BA82A /* Target.swift */,
+				D050CB2025DEE7DD009BA82A /* Provider.swift */,
 			);
 			path = "Network Layer";
 			sourceTree = "<group>";
@@ -227,7 +233,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D050CB1E25DEDA80009BA82A /* Target.swift in Sources */,
 				D01C333025DD8E800091A70D /* ViewController.swift in Sources */,
+				D050CB2125DEE7DD009BA82A /* Provider.swift in Sources */,
 				D01C332C25DD8E800091A70D /* AppDelegate.swift in Sources */,
 				D01C332E25DD8E800091A70D /* SceneDelegate.swift in Sources */,
 				D0F42E0025DEB7C40099F4C5 /* RealmModel.swift in Sources */,
