@@ -6,5 +6,6 @@ target 'NASA Client' do
   use_frameworks!
 
   # Pods for NASA Client
+  pod 'Kingfisher', '~> 6.0' 
   pod 'RealmSwift'
 end
