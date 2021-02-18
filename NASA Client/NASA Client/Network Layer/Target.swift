@@ -40,10 +40,9 @@ extension RequestTarget: TargetType {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "YYYY-MM-DD"
             let stringFromDate = dateFormatter.string(from: date)
-            
+            parameters["earth_date"] = stringFromDate
             parameters["page"] = page
             parameters["camera"] = camera
-            parameters["earth_date"] = stringFromDate
             parameters["api_key"] = "orkh6qZtcyqxpfyuQELyMyfFwCUbRAQJf1MvQCLy"
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
