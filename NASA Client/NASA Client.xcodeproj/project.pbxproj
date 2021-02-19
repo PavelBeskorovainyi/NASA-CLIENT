@@ -14,6 +14,8 @@
 		D01C333325DD8E800091A70D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D01C333125DD8E800091A70D /* Main.storyboard */; };
 		D01C333525DD8E820091A70D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D01C333425DD8E820091A70D /* Assets.xcassets */; };
 		D01C333825DD8E820091A70D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D01C333625DD8E820091A70D /* LaunchScreen.storyboard */; };
+		D020278225DFEF8F00481ABE /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D020278025DFEF8F00481ABE /* MainTableViewCell.swift */; };
+		D020278325DFEF8F00481ABE /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D020278125DFEF8F00481ABE /* MainTableViewCell.xib */; };
 		D050CB1E25DEDA80009BA82A /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = D050CB1D25DEDA80009BA82A /* Target.swift */; };
 		D050CB2125DEE7DD009BA82A /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D050CB2025DEE7DD009BA82A /* Provider.swift */; };
 		D050CB2925DEF476009BA82A /* RoversEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D050CB2825DEF476009BA82A /* RoversEnum.swift */; };
@@ -36,6 +38,8 @@
 		D01C333425DD8E820091A70D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D01C333725DD8E820091A70D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D01C333925DD8E820091A70D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D020278025DFEF8F00481ABE /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		D020278125DFEF8F00481ABE /* MainTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
 		D050CB1D25DEDA80009BA82A /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 		D050CB2025DEE7DD009BA82A /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		D050CB2825DEF476009BA82A /* RoversEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoversEnum.swift; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 		D050CB2725DEF3E2009BA82A /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				D020278025DFEF8F00481ABE /* MainTableViewCell.swift */,
+				D020278125DFEF8F00481ABE /* MainTableViewCell.xib */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -224,6 +230,7 @@
 			files = (
 				D01C333825DD8E820091A70D /* LaunchScreen.storyboard in Resources */,
 				D01C333525DD8E820091A70D /* Assets.xcassets in Resources */,
+				D020278325DFEF8F00481ABE /* MainTableViewCell.xib in Resources */,
 				D01C333325DD8E800091A70D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,6 +294,7 @@
 				D0F42E0025DEB7C40099F4C5 /* RealmModel.swift in Sources */,
 				D0F42DFD25DEB7AE0099F4C5 /* RequestModel.swift in Sources */,
 				D050CB3A25DEFACF009BA82A /* ImageViewController.swift in Sources */,
+				D020278225DFEF8F00481ABE /* MainTableViewCell.swift in Sources */,
 				D050CB3425DEF48A009BA82A /* CamerasEnum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

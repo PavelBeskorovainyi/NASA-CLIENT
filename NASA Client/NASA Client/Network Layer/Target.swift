@@ -38,7 +38,7 @@ extension RequestTarget: TargetType {
         case .requestWithParametrs(_, let camera, let date, let page):
             var parameters = [String:Any]()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "YYYY-MM-DD"
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             let stringFromDate = dateFormatter.string(from: date)
             parameters["earth_date"] = stringFromDate
             parameters["page"] = page

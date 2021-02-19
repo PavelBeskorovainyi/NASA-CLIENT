@@ -16,16 +16,19 @@ class Photo: Codable {
     var imagePath: String?
     var camera: Camera
     var rover: Rover
+    var earthDate: String?
     
     enum CodingKeys: String, CodingKey {
         case camera, rover
         case imagePath = "img_src"
+        case earthDate = "earth_date"
     }
     
     init(from realm: RealmRequestModel) {
         self.imagePath = realm.imagePath
         self.camera = Camera(name: realm.cameraName, fullName: realm.cameraFullName)
         self.rover = Rover(name: realm.roverName)
+        self.earthDate = realm.earthDate
     }
     
     func putObjectToRealm(){

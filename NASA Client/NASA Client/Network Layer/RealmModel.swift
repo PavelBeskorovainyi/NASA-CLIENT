@@ -13,6 +13,7 @@ class RealmRequestModel: Object {
     @objc dynamic var cameraName: String?
     @objc dynamic var imagePath: String?
     @objc dynamic var cameraFullName: String?
+    @objc dynamic var earthDate: String?
     @objc dynamic var dateCreated: String = String(Int(Date.timeIntervalSinceReferenceDate))
     
     override class func primaryKey() -> String? {

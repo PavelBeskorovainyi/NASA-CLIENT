@@ -12,7 +12,7 @@ enum Rovers: String, CaseIterable {
     case Opportunity
     case Spirit
     
-    var roverCameras: Cameras.AllCases {
+    var roverCameras: [Cameras] {
         switch self {
         case .Curiosity: return [.fhaz, .rhaz, .mast, .chemcam, .mahli, .mardi, .navcam]
         case .Opportunity, .Spirit: return [.fhaz, .rhaz, .navcam, .pancam, .minites]

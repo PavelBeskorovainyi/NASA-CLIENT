@@ -23,7 +23,6 @@ enum Cameras: String, CaseIterable {
         case .minites: return "Miniature Thermal Emission Spectrometer (Mini-TES)"
         }
     }
-    
 }
 
 //Abbreviation    Camera    Curiosity    Opportunity    Spirit
