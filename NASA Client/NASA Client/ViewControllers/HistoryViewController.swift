@@ -6,24 +6,71 @@
 //
 
 import UIKit
+import RealmSwift
 
-class HistoryViewController: UIViewController {
-
+class HistoryViewController: UIViewController, StoryboardInitializable {
+    private var tableView = UITableView()
+    private var realmPhotos = [Photo]()
+    private var realmFilesDates = [Int]()
+    var delegate: HistoryReload?
+    
     override func viewDidLoad() {
+//        deleteRealm()
+//        try! FileManager.default.removeItem(at: Realm.Configuration.defaultConfiguration.fileURL!)
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        tableView.register(HistoryTableViewCell.self, forCellReuseIdentifier: "historyCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        setupTableView()
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    fileprivate func setupTableView() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
-    */
-
+    
+    public func getPhotosFromRealm () {
+        let realm = try! Realm()
+        let storedData = realm.objects(RealmRequestModel.self)
+        storedData.sorted(by: {$0.dateCreated > $1.dateCreated}).forEach({realmPhotos.append(Photo(from: $0))})
+        storedData.sorted(by: {$0.dateCreated > $1.dateCreated}).forEach({realmFilesDates.append($0.dateCreated)})
+        tableView.reloadData()
+    }
+    
+    func deleteRealm () {
+        let realm = try! Realm()
+        try! realm.write({
+            realm.deleteAll()
+        })
+    }
+}
+//MARK: Table View Delegate & Data source Extension
+extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return realmPhotos.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as? HistoryTableViewCell {
+            cell.setPhotoToUI(realmPhotos[indexPath.row], time: realmFilesDates[indexPath.row])
+            return cell
+        }
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let tappedPhoto = realmPhotos[indexPath.row]
+        self.delegate?.historyCellTapped(rover: realmPhotos[indexPath.row].rover.name ?? "Curiosity", camera: realmPhotos[indexPath.row].camera.name ?? "fhaz" , date: realmPhotos[indexPath.row].earthDate ?? "2021-02-20")
+        tableView.deselectRow(at: indexPath, animated: true)
+        navigationController?.popViewController(animated: true)
+    }
+    
 }

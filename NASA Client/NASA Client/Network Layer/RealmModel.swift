@@ -14,7 +14,8 @@ class RealmRequestModel: Object {
     @objc dynamic var imagePath: String?
     @objc dynamic var cameraFullName: String?
     @objc dynamic var earthDate: String?
-    @objc dynamic var dateCreated: String = String(Int(Date.timeIntervalSinceReferenceDate))
+    
+    @objc dynamic var dateCreated: Int = Int(Date.timeIntervalSinceReferenceDate)
     
     override class func primaryKey() -> String? {
       return "dateCreated"
@@ -26,5 +27,6 @@ class RealmRequestModel: Object {
         self.cameraName = codableModel.camera.name
         self.imagePath = codableModel.imagePath
         self.cameraFullName = codableModel.camera.fullName
+        self.earthDate = codableModel.earthDate
     }
 }
