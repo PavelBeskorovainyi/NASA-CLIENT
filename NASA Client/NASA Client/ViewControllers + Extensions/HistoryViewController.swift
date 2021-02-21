@@ -12,7 +12,9 @@ class HistoryViewController: UIViewController, StoryboardInitializable {
     private var tableView = UITableView()
     private var realmPhotos = [Photo]()
     private var realmFilesDates = [Int]()
+    
     var delegate: HistoryReload?
+    var selectedIndexPath: Int = 0
     
     override func viewDidLoad() {
 //        deleteRealm()
@@ -33,7 +35,7 @@ class HistoryViewController: UIViewController, StoryboardInitializable {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
-    
+//MARK: - realm sorting
     public func getPhotosFromRealm () {
         let realm = try! Realm()
         let storedData = realm.objects(RealmRequestModel.self)
@@ -66,9 +68,12 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let tappedPhoto = realmPhotos[indexPath.row]
-        self.delegate?.historyCellTapped(rover: realmPhotos[indexPath.row].rover.name ?? "Curiosity", camera: realmPhotos[indexPath.row].camera.name ?? "fhaz" , date: realmPhotos[indexPath.row].earthDate ?? "2021-02-20")
+        self.selectedIndexPath = indexPath.row
+        if !realmPhotos.isEmpty{
+            self.delegate?.historyCellTapped(rover: realmPhotos[selectedIndexPath].rover.name ?? "Curiosity", camera: realmPhotos[selectedIndexPath].camera.name ?? "fhaz" , date: realmPhotos[selectedIndexPath].earthDate ?? "2021-02-20")
+        }
         tableView.deselectRow(at: indexPath, animated: true)
         navigationController?.popViewController(animated: true)
     }

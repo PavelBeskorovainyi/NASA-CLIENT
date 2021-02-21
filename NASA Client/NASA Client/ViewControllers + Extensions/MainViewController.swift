@@ -8,6 +8,7 @@
 import UIKit
 import PromiseKit
 import NVActivityIndicatorView
+import RealmSwift
 
 class MainViewController: UIViewController {
     @IBOutlet weak var roverTextField: UITextField!
@@ -23,24 +24,26 @@ class MainViewController: UIViewController {
     private var activityIndicator: NVActivityIndicatorView?
     private var noResultFoundView = UIImageView(image: UIImage(named: "noResult"))
     
-    fileprivate var datePicker = UIDatePicker()
-    fileprivate var roverAndCameraPicker = UIPickerView()
+    public var datePicker = UIDatePicker()
+    public var roverAndCameraPicker = UIPickerView()
     public var chosenDate = Date()
     public var chosenRover = Rovers.Curiosity
     public var chosenCamera = Cameras.fhaz
     
-    private var receivedPhotos = [Photo]()
-    private var requestPage = 1
+    fileprivate var receivedPhotos = [Photo]()
+    public var requestPage = 1
     
-    fileprivate enum Pickers {
+    private var selectedImage: UIImage?
+    
+    enum Pickers {
         case rover
         case camera
         case date
     }
-    private var chosenPicker: Pickers?
+    var chosenPicker: Pickers?
     public let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
     
-    private var chosenRoverIndex: Int {
+    public var chosenRoverIndex: Int {
         switch chosenRover {
         case .Curiosity: return 0
         case .Opportunity: return 1
@@ -62,8 +65,14 @@ class MainViewController: UIViewController {
         setupDatePicker()
         loadingViewsSetup()
         registerKeyboardNotifications()
-        getData()
+        getFirstPhotoFromRealm()
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        self.datePicker.date = chosenDate
+//        self.roverAndCameraPicker.selectRow(self.chosenRoverIndex, inComponent: 0, animated: false)
+//    }
     
     @IBAction func roverChoosing(_ sender: Any) {
         chosenPicker = .rover
@@ -99,7 +108,10 @@ class MainViewController: UIViewController {
     @IBAction func historyPresenting(_ sender: Any) {
         let vc = HistoryViewController.createFromStoryboard()
         vc.title = "History"
+        vc.delegate = self
         vc.getPhotosFromRealm()
+        self.view.endEditing(true)
+        [cameraControlState,roverControlState, dateControlState].forEach({$0?.isUserInteractionEnabled = true})
         self.navigationController?.pushViewController(vc, animated: true)
     }
     deinit {
@@ -119,13 +131,16 @@ extension MainViewController {
                 if self.requestPage == 1 {
                     self.receivedPhotos.removeAll()
                     response.photos.forEach({self.receivedPhotos.append($0)})
-                    self.noResultFoundView.isHidden = true
-                    self.tableView.isHidden = false
-                    self.activityIndicator?.stopAnimating()
-                    self.countingPhotosLabel.text = "\(response.photos.count) photos"
+                } else {
+                    response.photos.forEach({self.receivedPhotos.append($0)})
                 }
+                self.noResultFoundView.isHidden = true
+                self.tableView.isHidden = false
+                self.activityIndicator?.stopAnimating()
+                self.countingPhotosLabel.text = "\(self.receivedPhotos.count) photos"
             } else {
-                self.countingPhotosLabel.text = "no photos found"
+                self.requestPage = 1
+                self.countingPhotosLabel.text = "no photos"
                 self.receivedPhotos.removeAll()
                 self.tableView.isHidden = true
                 self.noResultFoundView.isHidden = false
@@ -162,7 +177,7 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 }
 //MARK: - input setups
 extension MainViewController {
-    fileprivate func setupPickersAndUI() {
+    func setupPickersAndUI() {
         [roverControlState, cameraControlState, dateControlState].forEach({
             $0!.layer.cornerRadius = 7; $0!.layer.borderWidth = 2;
             $0!.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
@@ -246,6 +261,7 @@ extension MainViewController {
             self.chosenDate = datePicker.date
         default: break
         }
+        self.requestPage = 1
         setupDatePicker()
         getData()
         self.activityIndicator?.startAnimating()
@@ -267,8 +283,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         self.receivedPhotos[indexPath.row].putObjectToRealm()
+        let vc = ImageViewController.createFromStoryboard()
+        vc.selectedImageURL = self.receivedPhotos[indexPath.row].imagePath
+        self.navigationController?.pushViewController(vc, animated: true)
     }
-    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == (25 * self.requestPage) {
+            self.requestPage += 1
+            getData()
+        }
+    }
 }
 
 //MARK:- Keyboard appereance
@@ -281,12 +305,12 @@ extension MainViewController {
     @objc private func keyboardWillShow (_ notification: Notification) {
         let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
         let keyboardHeight = keyboardFrame.cgRectValue.height
-//        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
-        tableView.contentOffset = CGPoint(x: 0, y: keyboardHeight + (self.inputView?.frame.size.height ?? 0) + self.additionalSafeAreaInsets.bottom)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        //        tableView.contentOffset = CGPoint(x: 0, y: keyboardHeight + (self.inputView?.frame.size.height ?? 0) + self.additionalSafeAreaInsets.bottom)
     }
     @objc private func keyboardWillHide(_ notification: Notification) {
-//        tableView.contentInset = .zero
-        tableView.contentOffset = .zero
+        tableView.contentInset = .zero
+        //        tableView.contentOffset = .zero
     }
     
     private func removeKeyboardNotifications () {
@@ -294,3 +318,32 @@ extension MainViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
     }
 }
+
+//MARK:- GET PHOTO FROM REALM
+extension MainViewController {
+    func getFirstPhotoFromRealm() {
+        let realm = try! Realm()
+        let storedData = realm.objects(RealmRequestModel.self)
+        if !storedData.isEmpty {
+            let lastPhoto = Photo(from: storedData.sorted(by: {$0.dateCreated > $1.dateCreated}).first ?? RealmRequestModel())
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let dateFormString = dateFormatter.date(from: lastPhoto.earthDate ?? "")
+            
+            self.chosenDate = dateFormString ?? self.yesterday!
+            self.chosenRover = Rovers(rawValue: lastPhoto.rover.name ?? "Curiosity") ?? .Curiosity
+            self.chosenCamera = Cameras(rawValue: lastPhoto.camera.name?.lowercased() ?? "fhaz") ?? .fhaz
+            self.roverTextField.text = lastPhoto.rover.name
+            self.cameraTextField.text = lastPhoto.camera.name
+            
+            let dateFomatter2 = DateFormatter()
+            dateFomatter2.dateFormat = "dd.MM.yy"
+            self.dateTextField.text = dateFomatter2.string(from: chosenDate)
+            
+            self.getData()
+        } else {
+            getData()
+        }
+    }
+}
+

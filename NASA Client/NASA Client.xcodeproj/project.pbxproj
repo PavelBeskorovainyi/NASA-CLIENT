@@ -14,6 +14,8 @@
 		D01C333325DD8E800091A70D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D01C333125DD8E800091A70D /* Main.storyboard */; };
 		D01C333525DD8E820091A70D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D01C333425DD8E820091A70D /* Assets.xcassets */; };
 		D01C333825DD8E820091A70D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D01C333625DD8E820091A70D /* LaunchScreen.storyboard */; };
+		D01EED2525E279790043BAEF /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EED2425E279790043BAEF /* ImageScrollView.swift */; };
+		D01EED2825E27A370043BAEF /* Image.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D01EED2725E27A370043BAEF /* Image.storyboard */; };
 		D020278225DFEF8F00481ABE /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D020278025DFEF8F00481ABE /* MainTableViewCell.swift */; };
 		D020278325DFEF8F00481ABE /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D020278125DFEF8F00481ABE /* MainTableViewCell.xib */; };
 		D050210C25E1459E005FDB90 /* History.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D050210B25E1459E005FDB90 /* History.storyboard */; };
@@ -43,6 +45,8 @@
 		D01C333425DD8E820091A70D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D01C333725DD8E820091A70D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D01C333925DD8E820091A70D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D01EED2425E279790043BAEF /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
+		D01EED2725E27A370043BAEF /* Image.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Image.storyboard; sourceTree = "<group>"; };
 		D020278025DFEF8F00481ABE /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		D020278125DFEF8F00481ABE /* MainTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
 		D050210B25E1459E005FDB90 /* History.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = History.storyboard; sourceTree = "<group>"; };
@@ -115,7 +119,7 @@
 				D01C333425DD8E820091A70D /* Assets.xcassets */,
 				D0F42DF825DEB68B0099F4C5 /* Support Files */,
 				D050CB2325DEEC6E009BA82A /* Storyboards */,
-				D050CB2525DEF26C009BA82A /* ViewControllers */,
+				D050CB2525DEF26C009BA82A /* ViewControllers + Extensions */,
 				D050CB2425DEF1DC009BA82A /* Enums */,
 				D0F42DFB25DEB7290099F4C5 /* Network Layer */,
 				D050CB2725DEF3E2009BA82A /* TableViewCells */,
@@ -128,6 +132,7 @@
 			children = (
 				D01C333125DD8E800091A70D /* Main.storyboard */,
 				D050210B25E1459E005FDB90 /* History.storyboard */,
+				D01EED2725E27A370043BAEF /* Image.storyboard */,
 				D050210E25E1482E005FDB90 /* Storyboard Initialize.swift */,
 			);
 			path = Storyboards;
@@ -142,15 +147,16 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
-		D050CB2525DEF26C009BA82A /* ViewControllers */ = {
+		D050CB2525DEF26C009BA82A /* ViewControllers + Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				D01C332F25DD8E800091A70D /* MainViewController.swift */,
 				D050CB3625DEFA75009BA82A /* HistoryViewController.swift */,
 				D050CB3925DEFACF009BA82A /* ImageViewController.swift */,
 				D050211F25E19492005FDB90 /* HistoryProtocol+Extension.swift */,
+				D01EED2425E279790043BAEF /* ImageScrollView.swift */,
 			);
-			path = ViewControllers;
+			path = "ViewControllers + Extensions";
 			sourceTree = "<group>";
 		};
 		D050CB2725DEF3E2009BA82A /* TableViewCells */ = {
@@ -245,6 +251,7 @@
 			files = (
 				D01C333825DD8E820091A70D /* LaunchScreen.storyboard in Resources */,
 				D01C333525DD8E820091A70D /* Assets.xcassets in Resources */,
+				D01EED2825E27A370043BAEF /* Image.storyboard in Resources */,
 				D020278325DFEF8F00481ABE /* MainTableViewCell.xib in Resources */,
 				D050210C25E1459E005FDB90 /* History.storyboard in Resources */,
 				D01C333325DD8E800091A70D /* Main.storyboard in Resources */,
@@ -310,6 +317,7 @@
 				D050CB2125DEE7DD009BA82A /* Provider.swift in Sources */,
 				D01C332C25DD8E800091A70D /* AppDelegate.swift in Sources */,
 				D01C332E25DD8E800091A70D /* SceneDelegate.swift in Sources */,
+				D01EED2525E279790043BAEF /* ImageScrollView.swift in Sources */,
 				D050210F25E1482E005FDB90 /* Storyboard Initialize.swift in Sources */,
 				D0F42E0025DEB7C40099F4C5 /* RealmModel.swift in Sources */,
 				D0F42DFD25DEB7AE0099F4C5 /* RequestModel.swift in Sources */,

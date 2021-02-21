@@ -16,7 +16,7 @@ class MainTableViewCell: UITableViewCell {
     
     private var photoModel: Photo?
     
-    func setModelToUI(with model: Photo){
+    public func setModelToUI(with model: Photo){
         self.roverNameLabel.text = "Rover: \(model.rover.name ?? "")"
         self.cameraNameLabel.text = "Camera: \(model.camera.fullName ?? "")"
         self.dateLabel.text = "Date: \(model.earthDate ?? "")"
@@ -25,7 +25,6 @@ class MainTableViewCell: UITableViewCell {
             photoImageView.kf.setImage(with: photoURL)
         }
     }
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

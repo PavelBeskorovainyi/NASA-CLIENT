@@ -307,6 +307,7 @@
                         <outlet property="roverTextField" destination="nAD-8K-aGM" id="IBz-Y1-HeG"/>
                         <outlet property="tableView" destination="gzU-Ur-lYm" id="3hs-i1-REN"/>
                         <segue destination="563-WK-tVG" kind="showDetail" identifier="History" id="Jzq-5I-L4a"/>
+                        <segue destination="tDx-Vr-Wn7" kind="show" identifier="Image" id="TW3-PI-Fco"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -322,6 +323,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5hO-Uk-Ne3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1759.2" y="-340.02998500749629"/>
+        </scene>
+        <!--ImageViewController-->
+        <scene sceneID="rXe-mc-WmX">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Image" referencedIdentifier="ImageViewController" id="tDx-Vr-Wn7" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="XyI-bR-m9s"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ht7-9i-5E8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1761" y="146"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8Y3-D9-DOk">

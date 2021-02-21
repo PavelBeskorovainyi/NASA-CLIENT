@@ -40,5 +40,10 @@ extension StoryboardInitializable where Self : HistoryViewController {
     static var storyboardName: String {
         return "History"
     }
+}
 
+extension StoryboardInitializable where Self : ImageViewController {
+    static var storyboardName: String {
+        return "Image"
+    }
 }
