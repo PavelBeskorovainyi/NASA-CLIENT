@@ -25,6 +25,11 @@ class ImageViewController: UIViewController, StoryboardInitializable {
         }
         imageScrollView?.set(image: photo.image ?? UIImage())
         self.setupImageScrollView()
+        self.centerImage()
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(UIDevice.orientationDidChangeNotification)
     }
     
     fileprivate func setupImageScrollView() {
@@ -36,7 +41,8 @@ class ImageViewController: UIViewController, StoryboardInitializable {
 //        imageScrollView?.contentOffset = self.view.center
         imageScrollView?.center = self.view.center
         imageScrollView?.contentMode = .redraw
-
+    }
+    fileprivate func centerImage() {
         self.imageScrollView?.zoom(
             to: CGRect(
                 origin: CGPoint(
@@ -44,5 +50,12 @@ class ImageViewController: UIViewController, StoryboardInitializable {
                     y: self.imageScrollView!.contentSize.height / 2 - self.view.frame.size.height / 2 ),
                 size: CGSize(width: 200, height: 200)), animated: false)
         self.imageScrollView?.setZoomScale(1, animated: true)
+    }
+    
+    @objc fileprivate func rotated() {
+        if UIDevice.current.orientation.isLandscape{
+            self.centerImage()
+        } else {
+            self.centerImage()}
     }
 }

@@ -21,7 +21,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var historyControlState: UIControl!
     @IBOutlet weak var countingPhotosLabel: UILabel!
     
-    private var activityIndicator: NVActivityIndicatorView?
+    public var activityIndicator: NVActivityIndicatorView?
     private var noResultFoundView = UIImageView(image: UIImage(named: "noResult"))
     
     public var datePicker = UIDatePicker()
@@ -68,11 +68,11 @@ class MainViewController: UIViewController {
         getFirstPhotoFromRealm()
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        self.datePicker.date = chosenDate
-//        self.roverAndCameraPicker.selectRow(self.chosenRoverIndex, inComponent: 0, animated: false)
-//    }
+    //    override func viewDidAppear(_ animated: Bool) {
+    //        super.viewDidAppear(animated)
+    //        self.datePicker.date = chosenDate
+    //        self.roverAndCameraPicker.selectRow(self.chosenRoverIndex, inComponent: 0, animated: false)
+    //    }
     
     @IBAction func roverChoosing(_ sender: Any) {
         chosenPicker = .rover
@@ -130,13 +130,10 @@ extension MainViewController {
             if !response.photos.isEmpty {
                 if self.requestPage == 1 {
                     self.receivedPhotos.removeAll()
-                    response.photos.forEach({self.receivedPhotos.append($0)})
-                } else {
-                    response.photos.forEach({self.receivedPhotos.append($0)})
                 }
+                response.photos.forEach({self.receivedPhotos.append($0)})
                 self.noResultFoundView.isHidden = true
                 self.tableView.isHidden = false
-                self.activityIndicator?.stopAnimating()
                 self.countingPhotosLabel.text = "\(self.receivedPhotos.count) photos"
             } else {
                 self.requestPage = 1
@@ -144,8 +141,8 @@ extension MainViewController {
                 self.receivedPhotos.removeAll()
                 self.tableView.isHidden = true
                 self.noResultFoundView.isHidden = false
-                self.activityIndicator?.stopAnimating()
             }
+            self.activityIndicator?.stopAnimating()
             self.tableView.reloadData()
             
         } .catch { (error) in
@@ -154,7 +151,7 @@ extension MainViewController {
     }
 }
 
-//MARK: - Pickers delegate, datasource and variables
+//MARK: - Pickers delegate & datasource
 extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -234,7 +231,7 @@ extension MainViewController {
         
     }
     
-    @objc private func saveChosenDataAndRequestToServer () {
+    @objc public func saveChosenDataAndRequestToServer () {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yy"
         [cameraControlState,roverControlState, dateControlState].forEach({$0?.isUserInteractionEnabled = true})
@@ -262,8 +259,8 @@ extension MainViewController {
         default: break
         }
         self.requestPage = 1
-        setupDatePicker()
-        getData()
+        self.setupDatePicker()
+        self.getData()
         self.activityIndicator?.startAnimating()
     }
 }
@@ -289,6 +286,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == (25 * self.requestPage) {
+            self.activityIndicator?.startAnimating()
             self.requestPage += 1
             getData()
         }
@@ -319,9 +317,10 @@ extension MainViewController {
     }
 }
 
-//MARK:- GET PHOTO FROM REALM
+//MARK:- GET LAST PHOTO FROM REALM
 extension MainViewController {
     func getFirstPhotoFromRealm() {
+        self.activityIndicator?.startAnimating()
         let realm = try! Realm()
         let storedData = realm.objects(RealmRequestModel.self)
         if !storedData.isEmpty {
@@ -339,7 +338,6 @@ extension MainViewController {
             let dateFomatter2 = DateFormatter()
             dateFomatter2.dateFormat = "dd.MM.yy"
             self.dateTextField.text = dateFomatter2.string(from: chosenDate)
-            
             self.getData()
         } else {
             getData()

@@ -28,7 +28,8 @@ extension MainViewController: HistoryReload {
         self.dateTextField.text = dateFomatter2.string(from: chosenDate)
         
         self.requestPage = 1
+        self.activityIndicator?.startAnimating()
         self.getData()
-        self.tableView.reloadData()
+        
     }
 }

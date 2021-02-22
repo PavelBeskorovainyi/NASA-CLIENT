@@ -31,7 +31,7 @@ class ImageScrollView: UIScrollView, UIScrollViewDelegate {
         self.addSubview(imageView)
         configurateFor(imageSize: image.size)
         
-        self.minimumZoomScale = 0.4
+        self.minimumZoomScale = 0.2
         self.maximumZoomScale = 4
     }
     
