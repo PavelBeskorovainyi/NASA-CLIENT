@@ -29,7 +29,7 @@ class ImageViewController: UIViewController, StoryboardInitializable {
         NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     deinit {
-        NotificationCenter.default.removeObserver(UIDevice.orientationDidChangeNotification)
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     fileprivate func setupImageScrollView() {

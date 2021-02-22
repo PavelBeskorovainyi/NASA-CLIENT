@@ -64,15 +64,9 @@ class MainViewController: UIViewController {
         setupPickersAndUI()
         setupDatePicker()
         loadingViewsSetup()
-        registerKeyboardNotifications()
+        registerNotifications()
         getFirstPhotoFromRealm()
     }
-    
-    //    override func viewDidAppear(_ animated: Bool) {
-    //        super.viewDidAppear(animated)
-    //        self.datePicker.date = chosenDate
-    //        self.roverAndCameraPicker.selectRow(self.chosenRoverIndex, inComponent: 0, animated: false)
-    //    }
     
     @IBAction func roverChoosing(_ sender: Any) {
         chosenPicker = .rover
@@ -205,7 +199,7 @@ extension MainViewController {
     }
     fileprivate func loadingViewsSetup() {
         let nvRect = CGRect(x: self.view.frame.origin.x, y: self.view.frame.height / 2 - self.view.frame.height / 6, width: self.view.frame.width, height: self.view.frame.height / 3)
-        let noResRect = CGRect(x: self.view.frame.origin.x, y: self.view.frame.height / 2 - self.view.frame.height / 4, width: self.view.frame.width, height: self.view.frame.height / 2)
+        let noResRect = CGRect(x: self.view.frame.origin.x + self.view.frame.width / 4, y: self.view.frame.height / 2 - self.view.frame.height / 6, width: self.view.frame.width / 2, height: self.view.frame.height / 3)
         self.activityIndicator = NVActivityIndicatorView(frame: nvRect, type: .ballClipRotatePulse, color: .systemRed, padding: nil)
         self.view.addSubview(activityIndicator ?? UIView())
         self.noResultFoundView.frame = noResRect
@@ -217,21 +211,21 @@ extension MainViewController {
     fileprivate var toolBar: UIToolbar {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(ignoreChanges))
-        let saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveChosenDataAndRequestToServer))
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(ignoreChangesCancelButton))
+        let saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveChosenDataAndRequestToServerButton))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([cancelButton, space, saveButton], animated: false)
         return toolbar
     }
     
-    @objc private func ignoreChanges() {
+    @objc private func ignoreChangesCancelButton() {
         [cameraControlState,roverControlState, dateControlState].forEach({$0?.isUserInteractionEnabled = true})
         [roverTextField, cameraTextField, dateTextField].forEach({$0?.isUserInteractionEnabled = false})
         self.view.endEditing(true)
         
     }
     
-    @objc public func saveChosenDataAndRequestToServer () {
+    @objc public func saveChosenDataAndRequestToServerButton () {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yy"
         [cameraControlState,roverControlState, dateControlState].forEach({$0?.isUserInteractionEnabled = true})
@@ -243,6 +237,7 @@ extension MainViewController {
             self.roverAndCameraPicker.selectRow(self.chosenRoverIndex, inComponent: 0, animated: false)
             self.chosenCamera = Cameras.fhaz
             self.cameraTextField.text = chosenCamera.rawValue
+            
             switch chosenRover{
             case .Curiosity: self.chosenDate = self.yesterday ?? Date()
             case .Opportunity: self.chosenDate = dateFormatter.date(from: "26.01.2004") ?? Date()
@@ -260,8 +255,8 @@ extension MainViewController {
         }
         self.requestPage = 1
         self.setupDatePicker()
-        self.getData()
         self.activityIndicator?.startAnimating()
+        self.getData()
     }
 }
 //MARK: - Table View Extension
@@ -293,13 +288,29 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK:- Keyboard appereance
+//MARK:- Notifications
 extension MainViewController {
-    private func registerKeyboardNotifications () {
+    private func registerNotifications () {
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(didRotated), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
+    @objc fileprivate func didRotated() {
+        let noResRect = CGRect(x: self.view.frame.origin.x + self.view.frame.width / 4, y: self.view.frame.height / 2 - self.view.frame.height / 6, width: self.view.frame.width / 2, height: self.view.frame.height / 3)
+        let nvRect = CGRect(x: self.view.frame.origin.x, y: self.view.frame.height / 2 - self.view.frame.height / 6, width: self.view.frame.width, height: self.view.frame.height / 3)
+        
+        if UIDevice.current.orientation.isLandscape{
+            self.noResultFoundView.frame = noResRect
+            self.activityIndicator?.frame = nvRect
+            self.activityIndicator?.type = .triangleSkewSpin
+        }
+        if UIDevice.current.orientation.isPortrait {
+            self.noResultFoundView.frame = noResRect
+            self.activityIndicator?.frame = nvRect
+            self.activityIndicator?.type = .ballClipRotatePulse
+     }
+    }
+
     @objc private func keyboardWillShow (_ notification: Notification) {
         let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
         let keyboardHeight = keyboardFrame.cgRectValue.height
@@ -314,6 +325,7 @@ extension MainViewController {
     private func removeKeyboardNotifications () {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 }
 
@@ -324,7 +336,9 @@ extension MainViewController {
         let realm = try! Realm()
         let storedData = realm.objects(RealmRequestModel.self)
         if !storedData.isEmpty {
+            
             let lastPhoto = Photo(from: storedData.sorted(by: {$0.dateCreated > $1.dateCreated}).first ?? RealmRequestModel())
+            
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let dateFormString = dateFormatter.date(from: lastPhoto.earthDate ?? "")

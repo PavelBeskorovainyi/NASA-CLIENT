@@ -11,6 +11,7 @@ import UIKit
 class ImageScrollView: UIScrollView, UIScrollViewDelegate {
     
     private var imageView: UIImageView!
+    public var currentZoom: CGFloat = 1
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,6 +49,9 @@ class ImageScrollView: UIScrollView, UIScrollViewDelegate {
         let offsetX = max(((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5), 0.0)
         let offsetY = max(0.0, ((scrollView.bounds.height - scrollView.contentSize.height) * 0.5))
         subview?.center = CGPoint(x: scrollView.contentSize.width * 0.5 + offsetX, y: scrollView.contentSize.height * 0.5 + offsetY - 44)
+    }
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        self.currentZoom = scale
     }
     
 }
