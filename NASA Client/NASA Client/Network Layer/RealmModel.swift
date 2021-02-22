@@ -15,8 +15,8 @@ class RealmRequestModel: Object {
     @objc dynamic var cameraFullName: String?
     @objc dynamic var earthDate: String?
     
-    @objc dynamic var dateCreated: Int = Int(Date.timeIntervalSinceReferenceDate)
-    
+    @objc dynamic var dateCreated: Int = Date().milisecondsSince1970
+
     override class func primaryKey() -> String? {
       return "dateCreated"
     }
@@ -29,4 +29,18 @@ class RealmRequestModel: Object {
         self.cameraFullName = codableModel.camera.fullName
         self.earthDate = codableModel.earthDate
     }
+}
+extension Date {
+    var timeIntervalSince1970inMilliseconds: TimeInterval {
+        return self.timeIntervalSince1970 * 1000
+    }
+    var milisecondsSince1970: Int {
+        return Int(timeIntervalSince1970inMilliseconds)
+    }
+    
+    init(milisecondsSince1970: Int) {
+        self = Date(timeIntervalSince1970: Double(milisecondsSince1970) / 1000)
+    }
+    
+    
 }

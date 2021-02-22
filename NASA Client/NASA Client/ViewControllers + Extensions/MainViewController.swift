@@ -173,7 +173,11 @@ extension MainViewController {
             $0!.layer.cornerRadius = 7; $0!.layer.borderWidth = 2;
             $0!.layer.borderColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         })
-        datePicker.preferredDatePickerStyle = .wheels
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
         datePicker.datePickerMode = .date
         dateTextField.inputView = datePicker
         [roverTextField, cameraTextField].forEach({$0?.inputView = roverAndCameraPicker})

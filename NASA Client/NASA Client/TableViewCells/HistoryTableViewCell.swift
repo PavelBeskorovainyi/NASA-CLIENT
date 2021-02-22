@@ -40,7 +40,7 @@ class HistoryTableViewCell: UITableViewCell {
             photoWasSeenImageView.kf.indicatorType = .activity
             photoWasSeenImageView.kf.setImage(with: photoURL)
         }
-        let date = Date(timeIntervalSinceReferenceDate: TimeInterval(time))
+        let date = Date.init(milisecondsSince1970: time)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, h:mm a"
         dateWasSeenlabel.text = dateFormatter.string(from: date)

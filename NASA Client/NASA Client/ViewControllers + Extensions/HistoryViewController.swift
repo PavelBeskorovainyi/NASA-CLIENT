@@ -19,7 +19,7 @@ class HistoryViewController: UIViewController, StoryboardInitializable {
     override func viewDidLoad() {
 //        deleteRealm()
 //        try! FileManager.default.removeItem(at: Realm.Configuration.defaultConfiguration.fileURL!)
-        super.viewDidLoad()
+//        super.viewDidLoad()
         tableView.register(HistoryTableViewCell.self, forCellReuseIdentifier: "historyCell")
         tableView.delegate = self
         tableView.dataSource = self
