@@ -19,7 +19,7 @@ class HistoryViewController: UIViewController, StoryboardInitializable {
     override func viewDidLoad() {
 //        deleteRealm()
 //        try! FileManager.default.removeItem(at: Realm.Configuration.defaultConfiguration.fileURL!)
-//        super.viewDidLoad()
+        super.viewDidLoad()
         tableView.register(HistoryTableViewCell.self, forCellReuseIdentifier: "historyCell")
         tableView.delegate = self
         tableView.dataSource = self
@@ -51,7 +51,7 @@ class HistoryViewController: UIViewController, StoryboardInitializable {
         })
     }
 }
-//MARK: Table View Delegate & Data source Extension
+//MARK: - Table View Delegate & Data source Extension
 extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return realmPhotos.count

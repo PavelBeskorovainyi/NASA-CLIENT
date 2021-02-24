@@ -230,6 +230,7 @@ extension MainViewController {
     }
     
     @objc public func saveChosenDataAndRequestToServerButton () {
+        self.activityIndicator?.startAnimating()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yy"
         [cameraControlState,roverControlState, dateControlState].forEach({$0?.isUserInteractionEnabled = true})
@@ -259,7 +260,6 @@ extension MainViewController {
         }
         self.requestPage = 1
         self.setupDatePicker()
-        self.activityIndicator?.startAnimating()
         self.getData()
     }
 }
@@ -312,9 +312,9 @@ extension MainViewController {
             self.noResultFoundView.frame = noResRect
             self.activityIndicator?.frame = nvRect
             self.activityIndicator?.type = .ballClipRotatePulse
-     }
+        }
     }
-
+    
     @objc private func keyboardWillShow (_ notification: Notification) {
         let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
         let keyboardHeight = keyboardFrame.cgRectValue.height
