@@ -34,16 +34,18 @@ extension RequestTarget: TargetType {
     }
     
     var task: Task {
+        var parameters = [String:Any]()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        parameters["api_key"] = "orkh6qZtcyqxpfyuQELyMyfFwCUbRAQJf1MvQCLy"
         switch self {
         case .requestWithParametrs(_, let camera, let date, let page):
-            var parameters = [String:Any]()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
             let stringFromDate = dateFormatter.string(from: date)
             parameters["earth_date"] = stringFromDate
             parameters["page"] = page
-            parameters["camera"] = camera
-            parameters["api_key"] = "orkh6qZtcyqxpfyuQELyMyfFwCUbRAQJf1MvQCLy"
+            if camera != "all" {
+                parameters["camera"] = camera
+            }
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }

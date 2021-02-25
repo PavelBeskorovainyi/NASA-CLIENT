@@ -14,8 +14,8 @@ enum Rovers: String, CaseIterable {
     
     var roverCameras: [Cameras] {
         switch self {
-        case .Curiosity: return [.fhaz, .rhaz, .mast, .chemcam, .mahli, .mardi, .navcam]
-        case .Opportunity, .Spirit: return [.fhaz, .rhaz, .navcam, .pancam, .minites]
+        case .Curiosity: return [.fhaz, .rhaz, .mast, .chemcam, .mahli, .mardi, .navcam, .all]
+        case .Opportunity, .Spirit: return [.fhaz, .rhaz, .navcam, .pancam, .minites, .all]
         }
     }
 }

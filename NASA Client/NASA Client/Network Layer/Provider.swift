@@ -29,7 +29,6 @@ struct Provider {
                     debugPrint(error.localizedDescription)
                     seal.reject(error)
                 }
-
             }
         }
     }

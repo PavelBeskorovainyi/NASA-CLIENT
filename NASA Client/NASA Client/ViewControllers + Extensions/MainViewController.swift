@@ -118,32 +118,32 @@ extension MainViewController {
     func getData() {
         firstly {
             Provider.getDataFrom(rover: chosenRover.rawValue, camera: chosenCamera.rawValue, date: chosenDate, page: requestPage)
-        }.done {
-            [weak self] (response) in
-            guard let self = self else {return}
-            if !response.photos.isEmpty {
-                if self.requestPage == 1 {
+        } .done {
+                [weak self] (response) in
+                guard let self = self else {return}
+                if !response.photos.isEmpty {
+                    if self.requestPage == 1 {
+                        self.receivedPhotos.removeAll()
+                    }
+                    response.photos.forEach({self.receivedPhotos.append($0)})
+                    self.noResultFoundView.isHidden = true
+                    self.tableView.isHidden = false
+                    self.countingPhotosLabel.text = "\(self.receivedPhotos.count) photos"
+                } else {
+                    self.requestPage = 1
+                    self.countingPhotosLabel.text = "no photos"
                     self.receivedPhotos.removeAll()
+                    self.tableView.isHidden = true
+                    self.noResultFoundView.isHidden = false
                 }
-                response.photos.forEach({self.receivedPhotos.append($0)})
-                self.noResultFoundView.isHidden = true
-                self.tableView.isHidden = false
-                self.countingPhotosLabel.text = "\(self.receivedPhotos.count) photos"
-            } else {
-                self.requestPage = 1
-                self.countingPhotosLabel.text = "no photos"
-                self.receivedPhotos.removeAll()
-                self.tableView.isHidden = true
-                self.noResultFoundView.isHidden = false
+                self.activityIndicator?.stopAnimating()
+                self.tableView.reloadData()
+                
+            } .catch { (error) in
+                debugPrint(error.localizedDescription)
             }
-            self.activityIndicator?.stopAnimating()
-            self.tableView.reloadData()
-            
-        } .catch { (error) in
-            debugPrint(error.localizedDescription)
         }
     }
-}
 
 //MARK: - Pickers delegate & datasource
 extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {

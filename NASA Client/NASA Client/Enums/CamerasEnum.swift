@@ -8,7 +8,7 @@
 import Foundation
 
 enum Cameras: String, CaseIterable {
-    case fhaz, rhaz, mast, chemcam, mahli, mardi, navcam, pancam, minites
+    case fhaz, rhaz, mast, chemcam, mahli, mardi, navcam, pancam, minites, all
     
     var fullName: String {
         switch self {
@@ -21,6 +21,7 @@ enum Cameras: String, CaseIterable {
         case .navcam: return "Navigation Camera"
         case .pancam: return "Panoramic Camera"
         case .minites: return "Miniature Thermal Emission Spectrometer (Mini-TES)"
+        case .all: return "ALL"
         }
     }
 }
