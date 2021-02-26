@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0972C9D70DD6123F786800D6 /* Pods_NASA_Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF6F8497DC4916D76696566 /* Pods_NASA_Client.framework */; };
+		6D07190125E971F600A9DB03 /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D07190025E971F600A9DB03 /* AppViewController.swift */; };
+		6DCDDE7A25E953AE0064E6AC /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCDDE7925E953AE0064E6AC /* AppCoordinator.swift */; };
 		D01C332C25DD8E800091A70D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01C332B25DD8E800091A70D /* AppDelegate.swift */; };
-		D01C332E25DD8E800091A70D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01C332D25DD8E800091A70D /* SceneDelegate.swift */; };
 		D01C333025DD8E800091A70D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01C332F25DD8E800091A70D /* MainViewController.swift */; };
 		D01C333325DD8E800091A70D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D01C333125DD8E800091A70D /* Main.storyboard */; };
 		D01C333525DD8E820091A70D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D01C333425DD8E820091A70D /* Assets.xcassets */; };
@@ -36,10 +37,11 @@
 /* Begin PBXFileReference section */
 		41F287EC134B83FC764D3CFC /* Pods-NASA Client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NASA Client.debug.xcconfig"; path = "Target Support Files/Pods-NASA Client/Pods-NASA Client.debug.xcconfig"; sourceTree = "<group>"; };
 		68BABD20F7C0DC822F622DD0 /* Pods-NASA Client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NASA Client.release.xcconfig"; path = "Target Support Files/Pods-NASA Client/Pods-NASA Client.release.xcconfig"; sourceTree = "<group>"; };
+		6D07190025E971F600A9DB03 /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
+		6DCDDE7925E953AE0064E6AC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		BFF6F8497DC4916D76696566 /* Pods_NASA_Client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NASA_Client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01C332825DD8E800091A70D /* NASA Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NASA Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01C332B25DD8E800091A70D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D01C332D25DD8E800091A70D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D01C332F25DD8E800091A70D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D01C333225DD8E800091A70D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D01C333425DD8E820091A70D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +87,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		6DCDDE7825E953930064E6AC /* AppRouting */ = {
+			isa = PBXGroup;
+			children = (
+				6DCDDE7925E953AE0064E6AC /* AppCoordinator.swift */,
+				6D07190025E971F600A9DB03 /* AppViewController.swift */,
+			);
+			path = AppRouting;
+			sourceTree = "<group>";
+		};
 		790C1AC18C57BC3DE6AAC520 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +128,7 @@
 				D01C333625DD8E820091A70D /* LaunchScreen.storyboard */,
 				D01C333925DD8E820091A70D /* Info.plist */,
 				D01C333425DD8E820091A70D /* Assets.xcassets */,
+				6DCDDE7825E953930064E6AC /* AppRouting */,
 				D0F42DF825DEB68B0099F4C5 /* Support Files */,
 				D050CB2325DEEC6E009BA82A /* Storyboards */,
 				D050CB2525DEF26C009BA82A /* ViewControllers + Extensions */,
@@ -173,7 +185,6 @@
 		D0F42DF825DEB68B0099F4C5 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				D01C332D25DD8E800091A70D /* SceneDelegate.swift */,
 				D01C332B25DD8E800091A70D /* AppDelegate.swift */,
 			);
 			path = "Support Files";
@@ -313,10 +324,11 @@
 				D050211A25E17865005FDB90 /* HistoryTableViewCell.swift in Sources */,
 				D01C333025DD8E800091A70D /* MainViewController.swift in Sources */,
 				D050CB3725DEFA75009BA82A /* HistoryViewController.swift in Sources */,
+				6D07190125E971F600A9DB03 /* AppViewController.swift in Sources */,
+				6DCDDE7A25E953AE0064E6AC /* AppCoordinator.swift in Sources */,
 				D050212025E19492005FDB90 /* HistoryProtocol+Extension.swift in Sources */,
 				D050CB2125DEE7DD009BA82A /* Provider.swift in Sources */,
 				D01C332C25DD8E800091A70D /* AppDelegate.swift in Sources */,
-				D01C332E25DD8E800091A70D /* SceneDelegate.swift in Sources */,
 				D01EED2525E279790043BAEF /* ImageScrollView.swift in Sources */,
 				D050210F25E1482E005FDB90 /* Storyboard Initialize.swift in Sources */,
 				D0F42E0025DEB7C40099F4C5 /* RealmModel.swift in Sources */,

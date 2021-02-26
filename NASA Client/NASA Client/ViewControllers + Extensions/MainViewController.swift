@@ -10,7 +10,7 @@ import PromiseKit
 import NVActivityIndicatorView
 import RealmSwift
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, StoryboardInitializable {
     @IBOutlet weak var roverTextField: UITextField!
     @IBOutlet weak var cameraTextField: UITextField!
     @IBOutlet weak var dateTextField: UITextField!
@@ -100,13 +100,9 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func historyPresenting(_ sender: Any) {
-        let vc = HistoryViewController.createFromStoryboard()
-        vc.title = "History"
-        vc.delegate = self
-        vc.getPhotosFromRealm()
+        AppCoordinator.shared.push(.history)
         self.view.endEditing(true)
         [cameraControlState,roverControlState, dateControlState].forEach({$0?.isUserInteractionEnabled = true})
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     deinit {
         removeKeyboardNotifications()
@@ -279,9 +275,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         self.receivedPhotos[indexPath.row].putObjectToRealm()
-        let vc = ImageViewController.createFromStoryboard()
-        vc.selectedImageURL = self.receivedPhotos[indexPath.row].imagePath
-        self.navigationController?.pushViewController(vc, animated: true)
+        AppCoordinator.shared.push(.photo(selectedUrl: self.receivedPhotos[indexPath.row].imagePath ?? ""))
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == (25 * self.requestPage) {

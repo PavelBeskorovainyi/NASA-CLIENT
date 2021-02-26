@@ -47,3 +47,9 @@ extension StoryboardInitializable where Self : ImageViewController {
         return "Image"
     }
 }
+
+extension StoryboardInitializable where Self : MainViewController {
+    static var storyboardName: String {
+        return "Main"
+    }
+}
