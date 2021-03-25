@@ -314,6 +314,7 @@ extension MainViewController {
         let keyboardHeight = keyboardFrame.cgRectValue.height
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
         //        tableView.contentOffset = CGPoint(x: 0, y: keyboardHeight + (self.inputView?.frame.size.height ?? 0) + self.additionalSafeAreaInsets.bottom)
+        print(keyboardHeight)
     }
     @objc private func keyboardWillHide(_ notification: Notification) {
         tableView.contentInset = .zero
